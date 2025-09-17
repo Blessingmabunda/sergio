@@ -1,0 +1,135 @@
+<div class="dashboard-overview">
+  <!-- Header Toolbar -->
+  <mat-toolbar color="primary" class="header-toolbar">
+    <div class="toolbar-content">
+      <div class="brand">
+        <mat-icon class="brand-icon">dashboard</mat-icon>
+        <span class="brand-text">Dashboard Portal</span>
+      </div>
+      
+      <div class="user-section">
+        <span class="welcome-text" *ngIf="currentUser">
+          Welcome, {{ currentUser.firstName }}
+        </span>
+        <button mat-icon-button [matMenuTriggerFor]="userMenu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <div class="user-info">
+            <div class="user-name">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</div>
+            <div class="user-role">{{ currentUser?.role | titlecase }}</div>
+            <div class="user-company">{{ currentUser?.company }}</div>
+          </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </mat-toolbar>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Filters Section -->
+    <div class="filters-section">
+      <div class="filters-container">
+        <mat-form-field appearance="outline" class="search-field">
+          <mat-label>Search dashboards</mat-label>
+          <input matInput 
+                  [(ngModel)]="searchTerm" 
+                  (input)="onSearchChange(searchTerm)"
+                  placeholder="Search by title or description">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="category-field">
+          <mat-label>Category</mat-label>
+          <mat-select [(ngModel)]="selectedCategory" (selectionChange)="onCategoryChange()">
+            <mat-option value="">All Categories</mat-option>
+            <mat-option *ngFor="let category of categories" [value]="category">
+              {{ category }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button (click)="clearFilters()" class="clear-filters-btn">
+          <mat-icon>clear</mat-icon>
+          Clear Filters
+        </button>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Loading dashboards...</p>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div *ngIf="!isLoading" class="dashboards-grid">
+      <div *ngIf="filteredDashboards.length === 0" class="no-dashboards">
+        <mat-icon class="no-data-icon">dashboard</mat-icon>
+        <h3>No dashboards found</h3>
+        <p>Try adjusting your search criteria or contact your administrator.</p>
+      </div>
+
+      <mat-card *ngFor="let dashboard of filteredDashboards" class="dashboard-card">
+        <div class="card-header">
+          <div class="category-chip" [style.background-color]="getCategoryColor(dashboard.category)">
+            {{ dashboard.category }}
+          </div>
+          <div class="card-actions">
+            <button mat-icon-button [matMenuTriggerFor]="cardMenu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #cardMenu="matMenu">
+              <button mat-menu-item (click)="viewDashboard(dashboard)">
+                <mat-icon>visibility</mat-icon>
+                <span>View Dashboard</span>
+              </button>
+              <button mat-menu-item *ngIf="canExport(dashboard)">
+                <mat-icon>download</mat-icon>
+                <span>Export Data</span>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+
+        <div class="card-preview">
+          <div class="preview-placeholder">
+            <mat-icon class="preview-icon">insert_chart</mat-icon>
+          </div>
+        </div>
+
+        <mat-card-content class="card-content">
+          <h3 class="dashboard-title">{{ dashboard.title }}</h3>
+          <p class="dashboard-description">{{ dashboard.description }}</p>
+          
+          <div class="dashboard-meta">
+            <div class="meta-item">
+              <mat-icon class="meta-icon">business</mat-icon>
+              <span>{{ dashboard.company }}</span>
+            </div>
+            <div class="meta-item">
+              <mat-icon class="meta-icon">schedule</mat-icon>
+              <span>{{ getLastUpdatedText(dashboard.lastUpdated) }}</span>
+            </div>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions class="card-actions-bottom">
+          <button mat-raised-button color="primary" (click)="viewDashboard(dashboard)">
+            <mat-icon>visibility</mat-icon>
+            View Dashboard
+          </button>
+          <button mat-stroked-button *ngIf="canExport(dashboard)">
+            <mat-icon>download</mat-icon>
+            Export
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

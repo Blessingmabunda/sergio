@@ -1,0 +1,205 @@
+<div class="dashboard-view">
+  <!-- Header Toolbar -->
+  <mat-toolbar color="primary" class="header-toolbar">
+    <div class="toolbar-content">
+      <div class="navigation-section">
+        <button mat-icon-button (click)="navigateToOverview()" matTooltip="Back to Overview">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        
+        <div class="dashboard-navigation">
+          <button mat-icon-button 
+                  (click)="navigateToPrevious()" 
+                  [disabled]="!canNavigatePrevious()"
+                  matTooltip="Previous Dashboard">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          
+          <div class="dashboard-info">
+            <span class="dashboard-title">{{ dashboard?.title }}</span>
+            <span class="dashboard-counter" *ngIf="availableDashboards.length > 0">
+              {{ currentDashboardIndex + 1 }} of {{ availableDashboards.length }}
+            </span>
+          </div>
+          
+          <button mat-icon-button 
+                  (click)="navigateToNext()" 
+                  [disabled]="!canNavigateNext()"
+                  matTooltip="Next Dashboard">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="action-section">
+        <button mat-icon-button 
+                (click)="refreshData()" 
+                [disabled]="isRefreshing"
+                matTooltip="Refresh Data">
+          <mat-icon [class.spinning]="isRefreshing">refresh</mat-icon>
+        </button>
+        
+        <button mat-icon-button 
+                (click)="exportData()" 
+                [disabled]="!canExport()"
+                matTooltip="Export Dashboard">
+          <mat-icon>download</mat-icon>
+        </button>
+
+        <button mat-icon-button [matMenuTriggerFor]="userMenu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu">
+          <div class="user-info">
+            <div class="user-name">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</div>
+            <div class="user-role">{{ currentUser?.role | titlecase }}</div>
+            <div class="user-company">{{ currentUser?.company }}</div>
+          </div>
+          <mat-divider></mat-divider>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </mat-toolbar>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="60"></mat-spinner>
+    <p>Loading dashboard...</p>
+  </div>
+
+  <!-- Dashboard Content -->
+  <div *ngIf="!isLoading && dashboard && dashboardData" class="dashboard-content">
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+      <div class="header-info">
+        <h1>{{ dashboard.title }}</h1>
+        <p class="description">{{ dashboard.description }}</p>
+        <div class="meta-info">
+          <mat-chip-set>
+            <mat-chip>{{ dashboard.category }}</mat-chip>
+            <mat-chip>{{ dashboard.company }}</mat-chip>
+            <mat-chip>
+              <mat-icon matChipTrailingIcon>schedule</mat-icon>
+              {{ getLastUpdatedText() }}
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard Tabs -->
+    <mat-tab-group class="dashboard-tabs" animationDuration="300ms">
+      <!-- Metrics Tab -->
+      <mat-tab label="Key Metrics">
+        <div class="tab-content">
+          <div class="metrics-grid" *ngIf="dashboardData.metrics.length > 0">
+            <mat-card *ngFor="let metric of dashboardData.metrics" class="metric-card">
+              <mat-card-content>
+                <div class="metric-header">
+                  <mat-icon [class]="'metric-icon ' + metric.id">
+                    {{ getMetricIcon(metric.id) }}
+                  </mat-icon>
+                  <span class="metric-title">{{ metric.title }}</span>
+                </div>
+                <div class="metric-value">
+                  {{ metric.value }}
+                  <span class="metric-unit" *ngIf="metric.unit">{{ metric.unit }}</span>
+                </div>
+                <div class="metric-trend" *ngIf="metric.trend">
+                  <mat-icon [class]="'trend-icon trend-' + metric.trend">
+                    {{ metric.trend === 'up' ? 'trending_up' : metric.trend === 'down' ? 'trending_down' : 'trending_flat' }}
+                  </mat-icon>
+                  <span *ngIf="metric.percentage">{{ metric.percentage }}%</span>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div *ngIf="dashboardData.metrics.length === 0" class="no-data">
+            <mat-icon>analytics</mat-icon>
+            <p>No metrics available</p>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Charts Tab -->
+      <mat-tab label="Charts">
+        <div class="tab-content">
+          <div class="charts-grid" *ngIf="dashboardData.charts.length > 0">
+            <mat-card *ngFor="let chart of dashboardData.charts" class="chart-card">
+              <mat-card-header>
+                <mat-card-title>
+                  <mat-icon>{{ getChartTypeIcon(chart.type) }}</mat-icon>
+                  {{ chart.title }}
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="chart-placeholder">
+                  <mat-icon class="chart-placeholder-icon">{{ getChartTypeIcon(chart.type) }}</mat-icon>
+                  <p>{{ chart.type | titlecase }} Chart</p>
+                  <small>{{ chart.data.length }} data points</small>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div *ngIf="dashboardData.charts.length === 0" class="no-data">
+            <mat-icon>insert_chart</mat-icon>
+            <p>No charts available</p>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Tables Tab -->
+      <mat-tab label="Data Tables">
+        <div class="tab-content">
+          <div class="tables-container" *ngIf="dashboardData.tables.length > 0">
+            <mat-card *ngFor="let table of dashboardData.tables" class="table-card">
+              <mat-card-header>
+                <mat-card-title>
+                  <mat-icon>table_chart</mat-icon>
+                  {{ table.title }}
+                </mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="table-wrapper">
+                  <table class="data-table">
+                    <thead>
+                      <tr>
+                        <th *ngFor="let header of table.headers">{{ header }}</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let row of table.rows.slice(0, 10)">
+                        <td *ngFor="let cell of row">{{ cell }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div *ngIf="table.rows.length > 10" class="table-footer">
+                    <small>Showing 10 of {{ table.rows.length }} rows</small>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+          <div *ngIf="dashboardData.tables.length === 0" class="no-data">
+            <mat-icon>table_chart</mat-icon>
+            <p>No tables available</p>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="!isLoading && !dashboard" class="error-container">
+    <mat-icon class="error-icon">error_outline</mat-icon>
+    <h2>Dashboard Not Found</h2>
+    <p>The requested dashboard could not be loaded.</p>
+    <button mat-raised-button color="primary" (click)="navigateToOverview()">
+      Back to Overview
+    </button>
+  </div>
+</div>

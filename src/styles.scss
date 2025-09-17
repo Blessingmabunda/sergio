@@ -1,0 +1,54 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Override Angular Material Primary Color - Only for specific elements */
+.mat-toolbar.mat-primary.header-toolbar {
+  background: #1f7fc3 !important;
+  color: white !important;
+}
+
+/* Only apply blue to View Dashboard buttons */
+.dashboard-card .mat-raised-button.mat-primary,
+.dashboard-overview .mat-raised-button.mat-primary {
+  background-color: #1f7fc3 !important;
+  color: white !important;
+}
+
+.dashboard-card .mat-raised-button.mat-primary:hover,
+.dashboard-overview .mat-raised-button.mat-primary:hover {
+  background-color: #0d5aa7 !important;
+}
+
+/* Ensure search fields and form fields stay white/original */
+.mat-form-field {
+  background: transparent !important;
+}
+
+.mat-form-field .mat-form-field-outline {
+  background: white !important;
+}
+
+.mat-form-field.mat-form-field-appearance-outline .mat-form-field-outline {
+  background: white !important;
+  color: inherit !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+  color: #1f7fc3 !important;
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: #1f7fc3 !important;
+}
+
+/* Keep search and category selectors with original styling */
+.search-field, .category-field {
+  background: white !important;
+}
+
+.search-field .mat-form-field-outline,
+.category-field .mat-form-field-outline {
+  background: white !important;
+}

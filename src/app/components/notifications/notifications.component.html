@@ -1,0 +1,304 @@
+<div class="notifications-container">
+  <!-- Header -->
+  <div class="notifications-header">
+    <div class="header-content">
+      <h1>
+        <mat-icon>notifications</mat-icon>
+        Notifications & Activity
+      </h1>
+      <div class="header-actions">
+        <button mat-icon-button (click)="loadData()" [disabled]="isLoading">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="notifications-content">
+    <mat-tab-group [(selectedIndex)]="selectedTab" (selectedTabChange)="onTabChange($event.index)">
+      
+      <!-- Notifications Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>notifications</mat-icon>
+          Notifications
+          <span class="unread-badge" *ngIf="(unreadCount$ | async) as count">
+            {{ count }}
+          </span>
+        </ng-template>
+        
+        <div class="tab-content">
+          <!-- Filters -->
+          <div class="filters-section">
+            <mat-card class="filters-card">
+              <div class="filters-content">
+                <mat-form-field appearance="outline">
+                  <mat-label>Filter by Status</mat-label>
+                  <mat-select [(value)]="notificationFilter">
+                    <mat-option value="all">All Notifications</mat-option>
+                    <mat-option value="unread">Unread Only</mat-option>
+                    <mat-option value="read">Read Only</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Filter by Type</mat-label>
+                  <mat-select [(value)]="notificationTypeFilter">
+                    <mat-option *ngFor="let type of notificationTypes" [value]="type.value">
+                      {{ type.label }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <div class="filter-actions">
+                  <button mat-raised-button color="primary" (click)="markAllAsRead()">
+                    Mark All Read
+                  </button>
+                  <button mat-stroked-button (click)="exportNotifications()">
+                    <mat-icon>download</mat-icon>
+                    Export
+                  </button>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+
+          <!-- Loading State -->
+          <div *ngIf="isLoading" class="loading-container">
+            <mat-spinner diameter="40"></mat-spinner>
+            <p>Loading notifications...</p>
+          </div>
+
+          <!-- Notifications List -->
+          <div *ngIf="!isLoading" class="notifications-list">
+            <div *ngFor="let notification of (getFilteredNotifications() | async)" 
+                 class="notification-item"
+                 [class.unread]="!notification.isRead"
+                 (click)="markAsRead(notification)">
+              
+              <mat-card class="notification-card">
+                <div class="notification-content">
+                  <div class="notification-icon">
+                    <mat-icon [color]="getNotificationColor(notification.type)">
+                      {{ getNotificationIcon(notification.type) }}
+                    </mat-icon>
+                  </div>
+                  
+                  <div class="notification-body">
+                    <div class="notification-header">
+                      <h3>{{ notification.title }}</h3>
+                      <span class="notification-time">
+                        {{ formatTimestamp(notification.timestamp) }}
+                      </span>
+                    </div>
+                    
+                    <p class="notification-message">{{ notification.message }}</p>
+                    
+                    <div class="notification-meta" *ngIf="notification.dashboardId">
+                      <mat-chip-set>
+                        <mat-chip>
+                          <mat-icon matChipAvatar>dashboard</mat-icon>
+                          Dashboard: {{ notification.dashboardId }}
+                        </mat-chip>
+                      </mat-chip-set>
+                    </div>
+                  </div>
+                  
+                  <div class="notification-actions">
+                    <button mat-icon-button 
+                            (click)="deleteNotification(notification); $event.stopPropagation()"
+                            matTooltip="Delete notification">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </mat-card>
+            </div>
+
+            <!-- Empty State -->
+            <div *ngIf="(getFilteredNotifications() | async)?.length === 0" class="empty-state">
+              <mat-icon>notifications_none</mat-icon>
+              <h3>No notifications found</h3>
+              <p>You're all caught up! No notifications match your current filters.</p>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Activity Logs Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>history</mat-icon>
+          Activity Logs
+        </ng-template>
+        
+        <div class="tab-content">
+          <!-- Activity Filters -->
+          <div class="filters-section">
+            <mat-card class="filters-card">
+              <div class="filters-content">
+                <mat-form-field appearance="outline">
+                  <mat-label>Start Date</mat-label>
+                  <input matInput [matDatepicker]="startPicker" [(ngModel)]="activityDateRange.start">
+                  <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #startPicker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>End Date</mat-label>
+                  <input matInput [matDatepicker]="endPicker" [(ngModel)]="activityDateRange.end">
+                  <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #endPicker></mat-datepicker>
+                </mat-form-field>
+
+                <div class="filter-actions">
+                  <button mat-raised-button color="primary" (click)="refreshActivityLogs()">
+                    <mat-icon>refresh</mat-icon>
+                    Refresh
+                  </button>
+                  <button mat-stroked-button (click)="exportActivityLogs()">
+                    <mat-icon>download</mat-icon>
+                    Export CSV
+                  </button>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+
+          <!-- Activity Logs Table -->
+          <div class="activity-logs-table">
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>Activity History</mat-card-title>
+              </mat-card-header>
+              
+              <mat-card-content>
+                <div class="table-container">
+                  <table mat-table [dataSource]="filteredActivityLogs" class="activity-table">
+                    
+                    <!-- Timestamp Column -->
+                    <ng-container matColumnDef="timestamp">
+                      <th mat-header-cell *matHeaderCellDef>Time</th>
+                      <td mat-cell *matCellDef="let log">
+                        {{ formatTimestamp(log.timestamp) }}
+                      </td>
+                    </ng-container>
+
+                    <!-- User Column -->
+                    <ng-container matColumnDef="user">
+                      <th mat-header-cell *matHeaderCellDef>User</th>
+                      <td mat-cell *matCellDef="let log">
+                        <div class="user-info">
+                          <mat-icon>person</mat-icon>
+                          {{ log.userName }}
+                        </div>
+                      </td>
+                    </ng-container>
+
+                    <!-- Action Column -->
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell *matHeaderCellDef>Action</th>
+                      <td mat-cell *matCellDef="let log">
+                        <mat-chip [color]="getActionColor(log.action)">
+                          {{ log.action }}
+                        </mat-chip>
+                      </td>
+                    </ng-container>
+
+                    <!-- Description Column -->
+                    <ng-container matColumnDef="description">
+                      <th mat-header-cell *matHeaderCellDef>Description</th>
+                      <td mat-cell *matCellDef="let log">{{ log.description }}</td>
+                    </ng-container>
+
+                    <!-- Dashboard Column -->
+                    <ng-container matColumnDef="dashboard">
+                      <th mat-header-cell *matHeaderCellDef>Dashboard</th>
+                      <td mat-cell *matCellDef="let log">
+                        <span *ngIf="log.dashboardName; else noDashboard">
+                          <mat-icon>dashboard</mat-icon>
+                          {{ log.dashboardName }}
+                        </span>
+                        <ng-template #noDashboard>
+                          <span class="no-data">—</span>
+                        </ng-template>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="['timestamp', 'user', 'action', 'description', 'dashboard']"></tr>
+                    <tr mat-row *matRowDef="let row; columns: ['timestamp', 'user', 'action', 'description', 'dashboard']"></tr>
+                  </table>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Settings Tab -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>settings</mat-icon>
+          Settings
+        </ng-template>
+        
+        <div class="tab-content">
+          <div class="settings-section">
+            <mat-card>
+              <mat-card-header>
+                <mat-card-title>Notification Preferences</mat-card-title>
+                <mat-card-subtitle>Configure how you receive notifications</mat-card-subtitle>
+              </mat-card-header>
+              
+              <mat-card-content>
+                <div *ngIf="settings$ | async as settings" class="settings-form">
+                  
+                  <div class="setting-group">
+                    <h3>Delivery Methods</h3>
+                    
+                    <mat-slide-toggle 
+                      [(ngModel)]="settings.emailNotifications"
+                      (change)="updateSettings(settings)">
+                      Email Notifications
+                    </mat-slide-toggle>
+                    <p class="setting-description">Receive notifications via email</p>
+                    
+                    <mat-slide-toggle 
+                      [(ngModel)]="settings.pushNotifications"
+                      (change)="updateSettings(settings)">
+                      Push Notifications
+                    </mat-slide-toggle>
+                    <p class="setting-description">Receive browser push notifications</p>
+                  </div>
+
+                  <mat-divider></mat-divider>
+
+                  <div class="setting-group">
+                    <h3>Notification Types</h3>
+                    
+                    <mat-slide-toggle 
+                      [(ngModel)]="settings.dashboardUpdates"
+                      (change)="updateSettings(settings)">
+                      Dashboard Updates
+                    </mat-slide-toggle>
+                    <p class="setting-description">Get notified when dashboards are updated</p>
+                    
+                    <mat-slide-toggle 
+                      [(ngModel)]="settings.systemAlerts"
+                      (change)="updateSettings(settings)">
+                      System Alerts
+                    </mat-slide-toggle>
+                    <p class="setting-description">Receive important system notifications</p>
+                  </div>
+
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+</div>
