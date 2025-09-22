@@ -1,89 +1,105 @@
 .dashboard-overview {
+  padding: 32px;
   min-height: 100vh;
-  background: #f8fafc;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 
-  .header-toolbar {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
+  // Page Header
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    padding: 24px 32px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
 
-    .toolbar-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 16px;
-
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-
-        .brand-icon {
-          font-size: 28px;
-          width: 28px;
-          height: 28px;
-        }
-
-        .brand-text {
-          font-size: 20px;
-          font-weight: 600;
-          letter-spacing: 0.5px;
-        }
+    .header-content {
+      .page-title {
+        font-size: 32px;
+        font-weight: 700;
+        color: #2d3748;
+        margin: 0 0 8px 0;
+        background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
       }
 
-      .user-section {
-        display: flex;
-        align-items: center;
-        gap: 16px;
+      .page-subtitle {
+        font-size: 16px;
+        color: #718096;
+        margin: 0;
+        font-weight: 400;
+      }
+    }
 
-        .welcome-text {
-          font-size: 14px;
-          opacity: 0.9;
-          display: none;
+    .header-actions {
+      .create-btn {
+        background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        border: none;
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-weight: 600;
+        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        transition: all 0.3s ease;
 
-          @media (min-width: 768px) {
-            display: block;
-          }
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 12px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        mat-icon {
+          margin-right: 8px;
         }
       }
     }
   }
 
+  // Main Content
   .main-content {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 24px 16px;
-
+    // Filters Section
     .filters-section {
       margin-bottom: 32px;
 
       .filters-container {
         display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-        align-items: flex-end;
+        gap: 20px;
+        align-items: center;
+        padding: 24px 32px;
         background: white;
-        padding: 24px;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        border-radius: 16px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        backdrop-filter: blur(10px);
 
-        .search-field {
-          flex: 1;
-          min-width: 250px;
-        }
-
+        .search-field,
         .category-field {
-          min-width: 180px;
+          flex: 1;
+          max-width: 300px;
+
+          ::ng-deep .mat-mdc-form-field {
+            .mat-mdc-text-field-wrapper {
+              border-radius: 12px;
+              background: #f8fafc;
+            }
+          }
         }
 
         .clear-filters-btn {
-          height: 56px;
-          border-radius: 8px;
-          
+          border: 2px solid #e2e8f0;
+          border-radius: 12px;
+          padding: 12px 20px;
+          color: #64748b;
+          font-weight: 500;
+          transition: all 0.3s ease;
+
+          &:hover {
+             border-color: #3b82f6;
+             color: #3b82f6;
+            background: rgba(59, 130, 246, 0.05);
+          }
+
           mat-icon {
             margin-right: 8px;
           }
@@ -91,109 +107,113 @@
       }
     }
 
+    // Loading State
     .loading-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 80px 20px;
-      text-align: center;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 
       p {
-        margin-top: 16px;
-        color: #666;
+        margin-top: 20px;
+        color: #64748b;
         font-size: 16px;
       }
     }
 
+    // Dashboard Grid
     .dashboards-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
       gap: 24px;
-
-      @media (max-width: 768px) {
-        grid-template-columns: 1fr;
-      }
 
       .no-dashboards {
         grid-column: 1 / -1;
         text-align: center;
         padding: 80px 20px;
         background: white;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 
         .no-data-icon {
           font-size: 64px;
           width: 64px;
           height: 64px;
-          color: #ccc;
-          margin-bottom: 16px;
+          color: #cbd5e0;
+          margin-bottom: 20px;
         }
 
         h3 {
-          margin: 0 0 8px 0;
-          color: #333;
-          font-weight: 500;
+          color: #2d3748;
+          font-size: 24px;
+          margin: 0 0 12px 0;
+          font-weight: 600;
         }
 
         p {
+          color: #64748b;
+          font-size: 16px;
           margin: 0;
-          color: #666;
-          font-size: 14px;
         }
       }
 
       .dashboard-card {
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        overflow: hidden;
         background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.2);
 
         &:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+          transform: translateY(-8px);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
 
         .card-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 16px 16px 0 16px;
+          padding: 20px 24px 0;
 
           .category-chip {
-            padding: 4px 12px;
-            border-radius: 16px;
+            padding: 6px 16px;
+            border-radius: 20px;
             font-size: 12px;
-            font-weight: 500;
+            font-weight: 600;
             color: white;
             text-transform: uppercase;
             letter-spacing: 0.5px;
           }
 
           .card-actions {
-            opacity: 0.7;
-            transition: opacity 0.2s ease;
+            button {
+              color: #64748b;
+              transition: color 0.3s ease;
 
-            &:hover {
-              opacity: 1;
+              &:hover {
+                 color: #3b82f6;
+              }
             }
           }
         }
 
         .card-preview {
+          padding: 20px 24px;
           height: 120px;
-          background: #1f7fc3;
           display: flex;
           align-items: center;
           justify-content: center;
-          margin: 16px;
-          border-radius: 8px;
-          position: relative;
-          overflow: hidden;
 
           .preview-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -202,27 +222,27 @@
               font-size: 48px;
               width: 48px;
               height: 48px;
-              color: rgba(255, 255, 255, 0.8);
+              color: #cbd5e0;
             }
           }
         }
 
         .card-content {
-          padding: 16px !important;
+          padding: 0 24px 20px;
 
           .dashboard-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2d3748;
             margin: 0 0 8px 0;
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
             line-height: 1.3;
           }
 
           .dashboard-description {
-            margin: 0 0 16px 0;
-            color: #666;
+            color: #64748b;
             font-size: 14px;
-            line-height: 1.4;
+            line-height: 1.5;
+            margin: 0 0 16px 0;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -231,15 +251,14 @@
 
           .dashboard-meta {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
+            gap: 16px;
 
             .meta-item {
               display: flex;
               align-items: center;
-              gap: 8px;
+              gap: 6px;
               font-size: 12px;
-              color: #888;
+              color: #718096;
 
               .meta-icon {
                 font-size: 16px;
@@ -251,16 +270,38 @@
         }
 
         .card-actions-bottom {
-          padding: 0 16px 16px 16px !important;
+          padding: 0 24px 24px;
           display: flex;
-          gap: 8px;
+          gap: 12px;
 
           button {
-            border-radius: 8px;
-            font-weight: 500;
+            border-radius: 12px;
+            font-weight: 600;
+            padding: 10px 20px;
+
+            &[color="primary"] {
+              background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+              border: none;
+              box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+
+               &:hover {
+                 box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
+              }
+            }
+
+            &[mat-stroked-button] {
+              border: 2px solid #e2e8f0;
+              color: #64748b;
+
+              &:hover {
+                 border-color: #3b82f6;
+                 color: #3b82f6;
+                background: rgba(59, 130, 246, 0.05);
+              }
+            }
 
             mat-icon {
-              margin-right: 8px;
+              margin-right: 6px;
               font-size: 18px;
               width: 18px;
               height: 18px;
@@ -272,71 +313,55 @@
   }
 }
 
-// User menu styling
-.user-info {
-  padding: 16px;
-  border-bottom: 1px solid #eee;
-
-  .user-name {
-    font-weight: 600;
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 4px;
-  }
-
-  .user-role {
-    font-size: 12px;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 2px;
-  }
-
-  .user-company {
-    font-size: 12px;
-    color: #888;
-  }
-}
-
-// Responsive adjustments
+// Responsive Design
 @media (max-width: 768px) {
   .dashboard-overview {
-    .main-content {
-      padding: 16px 12px;
+    padding: 16px;
 
+    .page-header {
+      flex-direction: column;
+      gap: 20px;
+      align-items: stretch;
+      padding: 20px;
+
+      .header-actions {
+        align-self: stretch;
+
+        .create-btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    }
+
+    .main-content {
       .filters-section .filters-container {
-        padding: 16px;
         flex-direction: column;
         align-items: stretch;
+        gap: 16px;
+        padding: 20px;
 
         .search-field,
         .category-field {
-          min-width: unset;
+          max-width: none;
         }
       }
 
-      .dashboards-grid .dashboard-card {
-        .card-content .dashboard-meta {
-          flex-direction: row;
-          justify-content: space-between;
-        }
+      .dashboards-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
       }
     }
   }
 }
 
-// Animation for loading
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+// Material Design Overrides
+::ng-deep {
+  .mat-mdc-card {
+    --mdc-elevated-card-container-elevation: none;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-.dashboard-card {
-  animation: fadeIn 0.5s ease-out;
+  .mat-mdc-raised-button {
+    --mdc-protected-button-container-elevation: none;
+  }
 }

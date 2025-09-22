@@ -1,0 +1,203 @@
+<div class="reports-container">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">Reports</h1>
+      <p class="page-subtitle">Generate, manage, and download comprehensive reports</p>
+    </div>
+    <div class="header-actions">
+      <mat-form-field class="time-range-field" appearance="outline">
+        <mat-label>Time Range</mat-label>
+        <mat-select [(value)]="selectedTimeRange" (selectionChange)="onTimeRangeChange($event.value)">
+          <mat-option *ngFor="let range of timeRanges" [value]="range.value">
+            {{ range.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="primary">
+        <mat-icon>add</mat-icon>
+        New Report
+      </button>
+      <button mat-stroked-button>
+        <mat-icon>schedule</mat-icon>
+        Schedule
+      </button>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-container">
+    <mat-spinner diameter="60"></mat-spinner>
+    <p>Loading reports...</p>
+  </div>
+
+  <!-- Main Content -->
+  <div *ngIf="!isLoading" class="main-content">
+    
+    <!-- Reports Tabs -->
+    <mat-tab-group class="reports-tabs" animationDuration="300ms">
+      
+      <!-- Generated Reports Tab -->
+      <mat-tab label="Generated Reports">
+        <div class="tab-content">
+          <h2 class="section-title">Recent Reports</h2>
+          
+          <div class="reports-grid">
+            <mat-card *ngFor="let report of reports" class="report-card">
+              <mat-card-header>
+                <div mat-card-avatar class="report-avatar">
+                  <mat-icon>{{ getTypeIcon(report.type) }}</mat-icon>
+                </div>
+                <mat-card-title>{{ report.title }}</mat-card-title>
+                <mat-card-subtitle>{{ report.description }}</mat-card-subtitle>
+                <div class="card-actions">
+                  <button mat-icon-button [matMenuTriggerFor]="reportMenu">
+                    <mat-icon>more_vert</mat-icon>
+                  </button>
+                  <mat-menu #reportMenu="matMenu">
+                    <button mat-menu-item (click)="downloadReport(report)">
+                      <mat-icon>download</mat-icon>
+                      <span>Download</span>
+                    </button>
+                    <button mat-menu-item (click)="scheduleReport(report)">
+                      <mat-icon>schedule</mat-icon>
+                      <span>Schedule</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteReport(report)">
+                      <mat-icon>delete</mat-icon>
+                      <span>Delete</span>
+                    </button>
+                  </mat-menu>
+                </div>
+              </mat-card-header>
+              
+              <mat-card-content>
+                <div class="report-meta">
+                  <div class="meta-item">
+                    <mat-icon>{{ getStatusIcon(report.status) }}</mat-icon>
+                    <span class="status" [class]="'status-' + report.status">{{ report.status | titlecase }}</span>
+                  </div>
+                  <div class="meta-item">
+                    <mat-icon>calendar_today</mat-icon>
+                    <span>{{ report.lastGenerated | date:'MMM d, y' }}</span>
+                  </div>
+                  <div class="meta-item">
+                    <mat-icon>{{ getFormatIcon(report.format) }}</mat-icon>
+                    <span>{{ report.format.toUpperCase() }} • {{ report.size }}</span>
+                  </div>
+                </div>
+              </mat-card-content>
+              
+              <mat-card-actions>
+                <button mat-button color="primary" (click)="downloadReport(report)" [disabled]="report.status !== 'ready'">
+                  <mat-icon>download</mat-icon>
+                  Download
+                </button>
+                <button mat-stroked-button (click)="scheduleReport(report)">
+                  <mat-icon>schedule</mat-icon>
+                  Schedule
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Report Templates Tab -->
+      <mat-tab label="Report Templates">
+        <div class="tab-content">
+          <h2 class="section-title">Available Templates</h2>
+          <p class="section-description">Choose from pre-built report templates or create your own custom report</p>
+          
+          <div class="templates-grid">
+            <mat-card *ngFor="let template of reportTemplates" class="template-card">
+              <mat-card-header>
+                <div mat-card-avatar class="template-avatar">
+                  <mat-icon>{{ template.icon }}</mat-icon>
+                </div>
+                <mat-card-title>{{ template.name }}</mat-card-title>
+                <mat-card-subtitle>{{ template.category }}</mat-card-subtitle>
+              </mat-card-header>
+              
+              <mat-card-content>
+                <p class="template-description">{{ template.description }}</p>
+                <div class="template-meta">
+                  <mat-chip-set>
+                    <mat-chip>
+                      <mat-icon matChipAvatar>schedule</mat-icon>
+                      {{ template.estimatedTime }}
+                    </mat-chip>
+                  </mat-chip-set>
+                </div>
+              </mat-card-content>
+              
+              <mat-card-actions>
+                <button mat-raised-button color="primary" (click)="generateReport(template.id)">
+                  <mat-icon>play_arrow</mat-icon>
+                  Generate
+                </button>
+                <button mat-stroked-button>
+                  <mat-icon>preview</mat-icon>
+                  Preview
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Scheduled Reports Tab -->
+      <mat-tab label="Scheduled Reports">
+        <div class="tab-content">
+          <h2 class="section-title">Scheduled Reports</h2>
+          <p class="section-description">Manage your automated report generation schedules</p>
+          
+          <div class="scheduled-reports-container">
+            <mat-card class="scheduled-card">
+              <mat-card-content>
+                <div class="scheduled-placeholder">
+                  <mat-icon class="scheduled-placeholder-icon">schedule</mat-icon>
+                  <h3>No Scheduled Reports</h3>
+                  <p>You haven't scheduled any reports yet. Set up automated report generation to receive regular updates.</p>
+                  <button mat-raised-button color="primary">
+                    <mat-icon>add_alarm</mat-icon>
+                    Schedule Your First Report
+                  </button>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </mat-tab>
+
+      <!-- Report History Tab -->
+      <mat-tab label="Report History">
+        <div class="tab-content">
+          <h2 class="section-title">Report History</h2>
+          <p class="section-description">View and manage your complete report generation history</p>
+          
+          <div class="history-container">
+            <mat-card class="history-card">
+              <mat-card-content>
+                <div class="history-placeholder">
+                  <mat-icon class="history-placeholder-icon">history</mat-icon>
+                  <h3>Report History</h3>
+                  <p>Track all your generated reports, download history, and access archived reports from this central location.</p>
+                  <div class="history-features">
+                    <mat-chip-set>
+                      <mat-chip>Download History</mat-chip>
+                      <mat-chip>Archive Access</mat-chip>
+                      <mat-chip>Generation Logs</mat-chip>
+                      <mat-chip>Performance Metrics</mat-chip>
+                    </mat-chip-set>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </div>
+</div>

@@ -1,34 +1,17 @@
 <div class="dashboard-overview">
-  <!-- Header Toolbar -->
-  <mat-toolbar color="primary" class="header-toolbar">
-    <div class="toolbar-content">
-      <div class="brand">
-        <mat-icon class="brand-icon">dashboard</mat-icon>
-        <span class="brand-text">Dashboard Portal</span>
-      </div>
-      
-      <div class="user-section">
-        <span class="welcome-text" *ngIf="currentUser">
-          Welcome, {{ currentUser.firstName }}
-        </span>
-        <button mat-icon-button [matMenuTriggerFor]="userMenu">
-          <mat-icon>account_circle</mat-icon>
-        </button>
-        <mat-menu #userMenu="matMenu">
-          <div class="user-info">
-            <div class="user-name">{{ currentUser?.firstName }} {{ currentUser?.lastName }}</div>
-            <div class="user-role">{{ currentUser?.role | titlecase }}</div>
-            <div class="user-company">{{ currentUser?.company }}</div>
-          </div>
-          <mat-divider></mat-divider>
-          <button mat-menu-item (click)="logout()">
-            <mat-icon>logout</mat-icon>
-            <span>Logout</span>
-          </button>
-        </mat-menu>
-      </div>
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">Dashboard Overview</h1>
+      <p class="page-subtitle">Manage and view your dashboards</p>
     </div>
-  </mat-toolbar>
+    <div class="header-actions">
+      <button mat-raised-button color="primary" class="create-btn">
+        <mat-icon>add</mat-icon>
+        Create Dashboard
+      </button>
+    </div>
+  </div>
 
   <!-- Main Content -->
   <div class="main-content">

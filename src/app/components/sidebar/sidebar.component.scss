@@ -1,0 +1,303 @@
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 280px;
+  background: linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &.collapsed {
+    width: 80px;
+  }
+
+  // Header Section
+  .sidebar-header {
+    padding: 24px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 80px;
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+
+        mat-icon {
+          color: white;
+          font-size: 24px;
+        }
+      }
+
+      .logo-text {
+        color: white;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+
+        h2 {
+          margin: 0;
+          font-size: 20px;
+          font-weight: 700;
+          line-height: 1;
+        }
+
+        span {
+          font-size: 12px;
+          opacity: 0.8;
+          font-weight: 400;
+        }
+      }
+    }
+
+    .collapse-btn {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+    }
+  }
+
+  // User Profile Section
+  .user-profile {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 16px;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+
+    .user-avatar {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      mat-icon {
+        color: white;
+        font-size: 32px;
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    .user-info {
+      color: white;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+
+      .user-name {
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 1.2;
+      }
+
+      .user-role {
+        font-size: 12px;
+        opacity: 0.8;
+        margin-top: 2px;
+      }
+    }
+  }
+
+  // Navigation Section
+  .sidebar-nav {
+    flex: 1;
+    padding: 16px 0;
+    overflow-y: auto;
+
+    .nav-list {
+      padding: 0;
+
+      .nav-item {
+        position: relative;
+        margin: 4px 16px;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        padding: 0 16px;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.1);
+          transform: translateX(4px);
+        }
+
+        &.active {
+          background: rgba(255, 255, 255, 0.2);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+          .nav-indicator {
+            opacity: 1;
+          }
+        }
+
+        .nav-content {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          width: 100%;
+
+          .nav-icon {
+            color: white;
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .nav-label {
+            color: white;
+            font-weight: 500;
+            font-size: 14px;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+          }
+        }
+
+        .nav-indicator {
+          position: absolute;
+          right: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 4px;
+          height: 24px;
+          background: white;
+          border-radius: 2px;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+      }
+    }
+  }
+
+  // Footer Section
+  .sidebar-footer {
+    padding: 16px 0;
+
+    .logout-btn {
+      margin: 4px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateX(4px);
+      }
+
+      .nav-content {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        width: 100%;
+
+        .nav-icon {
+          color: white;
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+        }
+
+        .nav-label {
+          color: white;
+          font-weight: 500;
+          font-size: 14px;
+          opacity: 1;
+          transition: opacity 0.3s ease;
+        }
+      }
+    }
+  }
+
+  // Collapsed state adjustments
+  &.collapsed {
+    .sidebar-header .logo-text,
+    .user-profile .user-info,
+    .nav-item .nav-label,
+    .logout-btn .nav-label {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .user-profile {
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .nav-item,
+    .logout-btn {
+      justify-content: center;
+      padding: 0;
+    }
+  }
+}
+
+// Scrollbar styling
+.sidebar-nav::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+// Material Design overrides
+::ng-deep {
+  .mat-mdc-list-item {
+    --mdc-list-list-item-container-height: auto !important;
+  }
+
+  .mat-mdc-list-item-content {
+    padding: 0 !important;
+  }
+
+  .mat-divider {
+    border-top-color: rgba(255, 255, 255, 0.1);
+    margin: 0 16px;
+  }
+}

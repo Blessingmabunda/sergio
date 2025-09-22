@@ -1,0 +1,53 @@
+.app-container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  background: #f8fafc;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.with-sidebar {
+    margin-left: 280px;
+  }
+
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    &.with-sidebar {
+      margin-left: 80px;
+    }
+  }
+}
+
+// Global styles for the dashboard
+:host {
+  display: block;
+  height: 100vh;
+}
+
+// Smooth scrolling
+.main-content {
+  scroll-behavior: smooth;
+}
+
+// Custom scrollbar for main content
+.main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

@@ -1,0 +1,72 @@
+<div class="sidebar" [class.collapsed]="isCollapsed">
+  <!-- Logo Section -->
+  <div class="sidebar-header">
+    <div class="logo-container">
+      <div class="logo-icon">
+        <mat-icon>dashboard</mat-icon>
+      </div>
+      <div class="logo-text" *ngIf="!isCollapsed">
+        <h2>DashBoard</h2>
+        <span>Portal</span>
+      </div>
+    </div>
+    <button mat-icon-button 
+            class="collapse-btn" 
+            (click)="toggleSidebar()"
+            matTooltip="Toggle Sidebar">
+      <mat-icon>{{ isCollapsed ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+    </button>
+  </div>
+
+  <!-- User Profile Section -->
+  <div class="user-profile" *ngIf="currentUser">
+    <div class="user-avatar">
+      <mat-icon>account_circle</mat-icon>
+    </div>
+    <div class="user-info" *ngIf="!isCollapsed">
+      <div class="user-name">{{ currentUser.firstName }} {{ currentUser.lastName }}</div>
+      <div class="user-role">{{ currentUser.role | titlecase }}</div>
+    </div>
+  </div>
+
+  <!-- Navigation Menu -->
+  <nav class="sidebar-nav">
+    <mat-list class="nav-list">
+      <mat-list-item 
+        *ngFor="let item of navigationItems" 
+        class="nav-item"
+        [class.active]="item.active"
+        (click)="navigateTo(item.route)"
+        matTooltip="{{ isCollapsed ? item.label : '' }}"
+        matTooltipPosition="right">
+        
+        <div class="nav-content">
+          <mat-icon class="nav-icon" [matBadge]="item.badge" 
+                    [matBadgeHidden]="!item.badge"
+                    matBadgeColor="accent"
+                    matBadgeSize="small">
+            {{ item.icon }}
+          </mat-icon>
+          <span class="nav-label" *ngIf="!isCollapsed">{{ item.label }}</span>
+        </div>
+        
+        <div class="nav-indicator" *ngIf="item.active"></div>
+      </mat-list-item>
+    </mat-list>
+  </nav>
+
+  <!-- Bottom Actions -->
+  <div class="sidebar-footer">
+    <mat-divider></mat-divider>
+    <button mat-list-item 
+            class="logout-btn"
+            (click)="logout()"
+            matTooltip="{{ isCollapsed ? 'Logout' : '' }}"
+            matTooltipPosition="right">
+      <div class="nav-content">
+        <mat-icon class="nav-icon">logout</mat-icon>
+        <span class="nav-label" *ngIf="!isCollapsed">Logout</span>
+      </div>
+    </button>
+  </div>
+</div>
