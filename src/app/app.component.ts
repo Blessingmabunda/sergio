@@ -14,6 +14,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 export class AppComponent implements OnInit {
   title = 'dashboard-app';
   showSidebar = false;
+  isSidebarCollapsed = false;
 
   constructor(private router: Router) {}
 
@@ -24,5 +25,9 @@ export class AppComponent implements OnInit {
     ).subscribe((event: NavigationEnd) => {
       this.showSidebar = !event.urlAfterRedirects.includes('/login');
     });
+  }
+
+  onSidebarCollapsed(collapsed: boolean) {
+    this.isSidebarCollapsed = collapsed;
   }
 }

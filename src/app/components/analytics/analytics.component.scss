@@ -21,10 +21,11 @@
         font-weight: 700;
         color: #2d3748;
         margin: 0 0 8px 0;
-        background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
       }
 
       .page-subtitle {
@@ -57,13 +58,13 @@
         padding: 12px 20px;
 
         &[color="primary"] {
-          background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+          background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%);
           border: none;
-          box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+          box-shadow: 0 8px 20px rgba(60, 160, 250, 0.3);
 
           &:hover {
             transform: translateY(-2px);
-            box-shadow: 0 12px 25px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 12px 25px rgba(60, 160, 250, 0.4);
           }
         }
 
@@ -72,9 +73,9 @@
           color: #64748b;
 
           &:hover {
-            border-color: #3b82f6;
-            color: #3b82f6;
-            background: rgba(59, 130, 246, 0.05);
+            border-color: #3ca0fa;
+            color: #3ca0fa;
+            background: rgba(60, 160, 250, 0.05);
           }
         }
 
@@ -146,7 +147,7 @@
                 width: 48px;
                 height: 48px;
                 border-radius: 12px;
-                background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+                background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%);
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -231,12 +232,12 @@
             font-weight: 500;
 
             &.mdc-tab--active {
-              color: #3b82f6;
+              color: #3ca0fa;
             }
           }
 
           .mat-ink-bar {
-            background-color: #3b82f6;
+            background-color: #3ca0fa;
           }
         }
 
@@ -270,7 +271,7 @@
                   color: #2d3748;
 
                   mat-icon {
-                    color: #3b82f6;
+                    color: #3ca0fa;
                   }
                 }
 
@@ -279,7 +280,7 @@
                     color: #64748b;
 
                     &:hover {
-                      color: #3b82f6;
+                      color: #3ca0fa;
                     }
                   }
                 }
@@ -338,16 +339,16 @@
                 color: #2d3748;
 
                 mat-icon {
-                  color: #3b82f6;
+                  color: #3ca0fa;
                 }
               }
 
               .chart-actions {
                 button {
-                  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+                  background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%);
                   border: none;
                   border-radius: 8px;
-                  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+                  box-shadow: 0 4px 12px rgba(60, 160, 250, 0.3);
 
                   mat-icon {
                     margin-right: 8px;
@@ -399,9 +400,9 @@
                     justify-content: center;
 
                     mat-chip {
-                      background: rgba(59, 130, 246, 0.1);
-                      color: #3b82f6;
-                      border: 1px solid rgba(59, 130, 246, 0.2);
+                      background: rgba(60, 160, 250, 0.1);
+                      color: #3ca0fa;
+                      border: 1px solid rgba(60, 160, 250, 0.2);
                     }
                   }
                 }
@@ -457,7 +458,7 @@
                 }
 
                 &.info {
-                  background: #3b82f6;
+                  background: #3ca0fa;
                 }
               }
 

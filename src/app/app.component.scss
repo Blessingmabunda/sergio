@@ -15,9 +15,16 @@
     margin-left: 280px;
   }
 
+  &.with-sidebar.sidebar-collapsed {
+    margin-left: 80px;
+  }
+
   // Responsive adjustments
   @media (max-width: 768px) {
     &.with-sidebar {
+      margin-left: 80px;
+    }
+    &.with-sidebar.sidebar-collapsed {
       margin-left: 80px;
     }
   }

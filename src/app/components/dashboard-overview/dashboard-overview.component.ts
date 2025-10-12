@@ -157,7 +157,7 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
       'Sales': '#4CAF50',
       'Finance': '#2196F3',
       'Analytics': '#FF9800',
-      'Operations': '#1f7fc3',
+      'Operations': '#3ca0fa',
       'Marketing': '#F44336'
     };
     return colors[category] || '#757575';

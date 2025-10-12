@@ -1,10 +1,10 @@
 <!-- Dashboard Application -->
 <div class="app-container">
   <!-- Sidebar for authenticated routes -->
-  <app-sidebar *ngIf="showSidebar"></app-sidebar>
+  <app-sidebar *ngIf="showSidebar" (collapsedChange)="onSidebarCollapsed($event)"></app-sidebar>
   
   <!-- Main content area -->
-  <div class="main-content" [class.with-sidebar]="showSidebar">
+  <div class="main-content" [class.with-sidebar]="showSidebar" [class.sidebar-collapsed]="isSidebarCollapsed">
     <router-outlet></router-outlet>
   </div>
 </div>

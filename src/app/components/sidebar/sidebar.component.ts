@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MatListModule } from '@angular/material/list';
@@ -37,18 +37,14 @@ interface NavigationItem {
 export class SidebarComponent implements OnInit {
   currentUser: User | null = null;
   isCollapsed = false;
+  @Output() collapsedChange = new EventEmitter<boolean>();
 
   navigationItems: NavigationItem[] = [
     {
       label: 'Dashboard',
       icon: 'dashboard',
-      route: '/dashboard',
+      route: '/analytics',
       active: true
-    },
-    {
-      label: 'Analytics',
-      icon: 'analytics',
-      route: '/analytics'
     },
     {
       label: 'Reports',
@@ -74,10 +70,12 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
+    this.collapsedChange.emit(this.isCollapsed);
   }
 
   toggleSidebar(): void {
     this.isCollapsed = !this.isCollapsed;
+    this.collapsedChange.emit(this.isCollapsed);
   }
 
   navigateTo(route: string): void {

@@ -5,20 +5,20 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* Override Angular Material Primary Color - Only for specific elements */
 .mat-toolbar.mat-primary.header-toolbar {
-  background: #1f7fc3 !important;
+  background: #3ca0fa !important;
   color: white !important;
 }
 
 /* Only apply blue to View Dashboard buttons */
 .dashboard-card .mat-raised-button.mat-primary,
 .dashboard-overview .mat-raised-button.mat-primary {
-  background-color: #1f7fc3 !important;
+  background-color: #3ca0fa !important;
   color: white !important;
 }
 
 .dashboard-card .mat-raised-button.mat-primary:hover,
 .dashboard-overview .mat-raised-button.mat-primary:hover {
-  background-color: #0d5aa7 !important;
+  background-color: #3ca0fa !important;
 }
 
 /* Ensure search fields and form fields stay white/original */
@@ -36,11 +36,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .mat-form-field-appearance-outline .mat-form-field-outline-thick {
-  color: #1f7fc3 !important;
+  color: #3ca0fa !important;
 }
 
 .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
-  color: #1f7fc3 !important;
+  color: #3ca0fa !important;
 }
 
 /* Keep search and category selectors with original styling */

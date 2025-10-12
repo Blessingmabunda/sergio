@@ -4,7 +4,7 @@
   top: 0;
   height: 100vh;
   width: 280px;
-  background: linear-gradient(180deg, #3b82f6 0%, #1e40af 100%);
+  background: linear-gradient(180deg, #3ca0fa 0%, #3ca0fa 100%);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1000;
@@ -301,3 +301,14 @@
     margin: 0 16px;
   }
 }
+
+  // Apply text shadow to all main text elements in sidebar
+  .sidebar mat-icon,
+  .sidebar .sidebar-header .logo-text h2,
+  .sidebar .sidebar-header .logo-text span,
+  .sidebar .user-profile .user-info .user-name,
+  .sidebar .user-profile .user-info .user-role,
+  .sidebar .sidebar-nav .nav-item .nav-label,
+  .sidebar .sidebar-footer .logout-btn .nav-label {
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  }

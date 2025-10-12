@@ -4,10 +4,10 @@
   padding: 0;
 
   .settings-header {
-    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+    background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%);
     color: white;
     padding: 32px 0;
-    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 8px 32px rgba(60, 160, 250, 0.3);
     position: relative;
     overflow: hidden;
 
@@ -37,6 +37,7 @@
           display: flex;
           align-items: center;
           gap: 16px;
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 
           mat-icon {
             font-size: 2.5rem;
@@ -100,13 +101,13 @@
             transition: all 0.3s ease;
 
             &.mdc-tab--active {
-              color: #3b82f6;
-              background: rgba(59, 130, 246, 0.1);
+              color: #3ca0fa;
+              background: rgba(60, 160, 250, 0.1);
             }
 
             &:hover:not(.mdc-tab--active) {
-              background: rgba(59, 130, 246, 0.05);
-              color: #3b82f6;
+              background: rgba(60, 160, 250, 0.05);
+              color: #3ca0fa;
             }
           }
 
@@ -117,7 +118,7 @@
           }
 
           .mdc-tab-indicator__content--underline {
-            background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%);
             height: 3px;
             border-radius: 2px;
           }
@@ -163,8 +164,8 @@
                 margin: 0;
 
                 mat-icon {
-                  color: #3b82f6;
-                  background: rgba(59, 130, 246, 0.1);
+                  color: #3ca0fa;
+                  background: rgba(60, 160, 250, 0.1);
                   border-radius: 8px;
                   padding: 8px;
                   font-size: 1.25rem;
@@ -230,7 +231,7 @@
               content: '';
               width: 4px;
               height: 20px;
-              background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+              background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%);
               border-radius: 2px;
             }
           }
@@ -264,8 +265,8 @@
                 flex: 1;
 
                 mat-icon {
-                  color: #3b82f6;
-                  background: rgba(59, 130, 246, 0.1);
+                  color: #3ca0fa;
+                  background: rgba(60, 160, 250, 0.1);
                   border-radius: 8px;
                   padding: 8px;
                   font-size: 1.25rem;
@@ -316,17 +317,17 @@
 // Button Styling
 button {
   &[color="primary"] {
-    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%) !important;
+    background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%) !important;
     border: none;
     border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+    box-shadow: 0 8px 20px rgba(60, 160, 250, 0.3);
     font-weight: 600;
     padding: 12px 24px;
     transition: all 0.3s ease;
 
     &:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 25px rgba(59, 130, 246, 0.4);
+      box-shadow: 0 12px 25px rgba(60, 160, 250, 0.4);
     }
 
     &:disabled {
@@ -346,9 +347,9 @@ button {
     transition: all 0.3s ease;
 
     &:hover {
-      border-color: #3b82f6;
-      color: #3b82f6;
-      background: rgba(59, 130, 246, 0.05);
+      border-color: #3ca0fa;
+      color: #3ca0fa;
+      background: rgba(60, 160, 250, 0.1);
       transform: translateY(-1px);
     }
 
@@ -380,9 +381,9 @@ button {
       }
 
       &.mdc-text-field--focused {
-        border-color: #3b82f6;
+        border-color: #3ca0fa;
         background: white;
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        box-shadow: 0 0 0 3px rgba(60, 160, 250, 0.1);
       }
     }
 
@@ -397,11 +398,11 @@ button {
 
     &.mat-focused {
       .mat-mdc-form-field-label {
-        color: #3b82f6;
+        color: #3ca0fa;
       }
 
       .mat-mdc-form-field-icon-suffix {
-        color: #3b82f6;
+        color: #3ca0fa;
       }
     }
   }
@@ -417,12 +418,12 @@ button {
       transition: all 0.2s ease;
 
       &:hover {
-        background: rgba(59, 130, 246, 0.05);
+        background: rgba(60, 160, 250, 0.05);
       }
 
       &.mdc-list-item--selected {
-        background: rgba(59, 130, 246, 0.1);
-        color: #3b82f6;
+        background: rgba(60, 160, 250, 0.1);
+        color: #3ca0fa;
       }
     }
   }
@@ -441,12 +442,12 @@ button {
 
       &.mdc-switch--selected {
         .mdc-switch__track {
-          background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+          background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%);
         }
 
         .mdc-switch__handle {
           .mdc-switch__ripple {
-            background: rgba(59, 130, 246, 0.2);
+            background: rgba(60, 160, 250, 0.2);
           }
         }
       }
@@ -459,7 +460,7 @@ button {
     }
 
     &.info-snackbar {
-      --mdc-snackbar-container-color: #3b82f6;
+      --mdc-snackbar-container-color: #3ca0fa;
     }
 
     &.warning-snackbar {
@@ -588,6 +589,7 @@ button {
           h1 {
             font-size: 1.75rem;
             flex-direction: column;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
             text-align: center;
             gap: 12px;
           }

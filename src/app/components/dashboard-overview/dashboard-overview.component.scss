@@ -21,10 +21,11 @@
         font-weight: 700;
         color: #2d3748;
         margin: 0 0 8px 0;
-        background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
       }
 
       .page-subtitle {
@@ -37,7 +38,7 @@
 
     .header-actions {
       .create-btn {
-        background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+        background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%);
         border: none;
         border-radius: 12px;
         padding: 12px 24px;
@@ -364,4 +365,28 @@
   .mat-mdc-raised-button {
     --mdc-protected-button-container-elevation: none;
   }
+}
+
+.dashboard-overview .filters-section .filter-chip {
+  border-color: #3ca0fa;
+  color: #3ca0fa;
+  background: rgba(60, 160, 250, 0.05);
+}
+
+.dashboard-overview .stats-section .stat-card .stat-header mat-icon {
+  color: #3ca0fa;
+}
+
+.dashboard-overview .pipeline-section .stage-card .stage-header {
+  background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%);
+  box-shadow: 0 4px 12px rgba(60, 160, 250, 0.3);
+}
+.dashboard-overview .pipeline-section .stage-card .stage-header:hover {
+  box-shadow: 0 6px 16px rgba(60, 160, 250, 0.4);
+}
+
+.dashboard-overview .pipeline-section .stage-card .stage-footer .stage-action {
+  border-color: #3ca0fa;
+  color: #3ca0fa;
+  background: rgba(60, 160, 250, 0.05);
 }
