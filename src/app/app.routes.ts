@@ -6,6 +6,7 @@ import { NotificationsComponent } from './components/notifications/notifications
 import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { ReportsComponent } from './components/reports/reports.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { HelpComponent } from './components/help/help.component';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -39,6 +40,11 @@ export const routes: Routes = [
   { 
     path: 'settings', 
     component: SettingsComponent,
+    canActivate: [authGuard]
+  },
+  { 
+    path: 'help', 
+    component: HelpComponent,
     canActivate: [authGuard]
   },
   { path: '**', redirectTo: '/login' }

@@ -1,0 +1,22 @@
+<div class="dialog-container">
+  <div class="dialog-header">
+    <div class="icon-wrap">
+      <mat-icon>{{ data.icon }}</mat-icon>
+    </div>
+    <h2 class="dialog-title">{{ data.title }}</h2>
+    <p class="dialog-subtitle">{{ data.description }}</p>
+  </div>
+
+  <div class="dialog-content" *ngIf="data.bullets?.length">
+    <ul class="bullet-list">
+      <li *ngFor="let item of data.bullets">{{ item }}</li>
+    </ul>
+  </div>
+
+  <div class="dialog-actions">
+    <button mat-raised-button color="primary" (click)="close()">
+      <mat-icon>check_circle</mat-icon>
+      Close
+    </button>
+  </div>
+</div>

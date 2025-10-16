@@ -157,7 +157,7 @@ export class DashboardViewComponent implements OnInit, OnDestroy {
   }
 
   navigateToOverview(): void {
-    this.router.navigate(['/overview']);
+    this.router.navigate(['/dashboard']);
   }
 
   logout(): void {

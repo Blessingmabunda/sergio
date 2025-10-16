@@ -43,13 +43,8 @@ export class SidebarComponent implements OnInit {
     {
       label: 'Dashboard',
       icon: 'dashboard',
-      route: '/analytics',
+      route: '/dashboard',
       active: true
-    },
-    {
-      label: 'Reports',
-      icon: 'assessment',
-      route: '/reports'
     },
     {
       label: 'Notifications',
@@ -57,9 +52,14 @@ export class SidebarComponent implements OnInit {
       route: '/notifications'
     },
     {
-      label: 'Settings',
-      icon: 'settings',
-      route: '/settings'
+      label: 'Reports',
+      icon: 'assessment',
+      route: '/reports'
+    },
+    {
+      label: 'Help',
+      icon: 'help_outline',
+      route: '/help'
     }
   ];
 
@@ -84,7 +84,7 @@ export class SidebarComponent implements OnInit {
     if (selectedItem) {
       selectedItem.active = true;
     }
-    this.router.navigate([route]);
+    this.router.navigateByUrl(route);
   }
 
   logout(): void {

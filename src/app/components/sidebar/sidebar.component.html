@@ -44,7 +44,7 @@
           <mat-icon class="nav-icon" [matBadge]="item.badge" 
                     [matBadgeHidden]="!item.badge"
                     matBadgeColor="accent"
-                    matBadgeSize="small">
+                    matBadgeSize="small" aria-hidden="false">
             {{ item.icon }}
           </mat-icon>
           <span class="nav-label" *ngIf="!isCollapsed">{{ item.label }}</span>

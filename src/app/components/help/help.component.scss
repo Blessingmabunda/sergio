@@ -1,0 +1,199 @@
+.help-page {
+  min-height: 100vh;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+
+.help-header {
+  background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%);
+  color: white;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      font-weight: 300;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+
+      mat-icon {
+        font-size: 32px;
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 12px;
+
+      button {
+        color: white;
+      }
+    }
+  }
+}
+
+/* Removed hero-content; using notifications-style header layout */
+
+/* Removed hero-icon; header uses inline icon in title */
+
+/* Removed hero-icon mat-icon; size handled within h1 */
+
+/* Removed hero h1; using notifications-style typography */
+
+/* Removed hero subtext paragraph */
+
+/* Removed hero-actions; using header-actions with icon buttons */
+
+.content-grid {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.card mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+}
+
+/* Modern Resources Card */
+.resources-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.resources-card::before {
+  content: '';
+  position: absolute;
+  inset: -80px -40px auto auto;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: radial-gradient(220px 220px at 50% 50%, rgba(60,160,250,0.18) 0%, rgba(60,160,250,0.08) 60%, transparent 100%);
+  pointer-events: none;
+}
+
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.resource-tile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+  border: 1px solid rgba(60, 160, 250, 0.12);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.08);
+    border-color: rgba(60, 160, 250, 0.24);
+  }
+}
+
+.tile-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(120px 120px at 50% 50%, rgba(60,160,250,0.16) 0%, rgba(60,160,250,0.08) 60%, transparent 100%);
+  color: #3ca0fa;
+}
+
+.tile-icon mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+.tile-text h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.tile-text p {
+  margin: 0;
+  color: #64748b;
+}
+
+.faq-accordion {
+  .mat-expansion-panel {
+    border-radius: 12px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  }
+}
+
+::ng-deep .faq-accordion .mat-expansion-panel-header {
+  padding: 16px 20px;
+}
+
+::ng-deep .faq-accordion .mat-expansion-panel-header .mat-expansion-panel-header-title {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+::ng-deep .faq-accordion .mat-expansion-panel-content {
+  padding: 0 20px 16px !important;
+  color: #64748b;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #f8f9ff;
+  }
+}
+
+.contact-icon {
+  color: #3ca0fa;
+}
+
+.card {
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 768px) {
+  .hero h1 { font-size: 28px; }
+}
