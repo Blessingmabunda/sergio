@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="header-content">
       <h1 class="page-title">Reports</h1>
-      <p class="page-subtitle">Generate, manage, and download comprehensive reports</p>
+      <!-- <p class="page-subtitle">Generate, manage, and download comprehensive reports</p> -->
     </div>
     <div class="header-actions">
       <mat-form-field class="time-range-field" appearance="outline">
@@ -18,10 +18,10 @@
         <mat-icon>add</mat-icon>
         New Report
       </button>
-      <button mat-stroked-button>
+      <!-- <button mat-stroked-button>
         <mat-icon>schedule</mat-icon>
         Schedule
-      </button>
+      </button> -->
     </div>
   </div>
 
@@ -93,7 +93,7 @@
                   <mat-icon>download</mat-icon>
                   Download
                 </button>
-                <button mat-stroked-button (click)="scheduleReport(report)">
+                <button *ngIf="false" mat-stroked-button (click)="scheduleReport(report)">
                   <mat-icon>schedule</mat-icon>
                   Schedule
                 </button>
@@ -103,72 +103,7 @@
         </div>
       </mat-tab>
 
-      <!-- Report Templates Tab -->
-      <mat-tab label="Report Templates">
-        <div class="tab-content">
-          <h2 class="section-title">Available Templates</h2>
-          <p class="section-description">Choose from pre-built report templates or create your own custom report</p>
-          
-          <div class="templates-grid">
-            <mat-card *ngFor="let template of reportTemplates" class="template-card">
-              <mat-card-header>
-                <div mat-card-avatar class="template-avatar">
-                  <mat-icon>{{ template.icon }}</mat-icon>
-                </div>
-                <mat-card-title>{{ template.name }}</mat-card-title>
-                <mat-card-subtitle>{{ template.category }}</mat-card-subtitle>
-              </mat-card-header>
-              
-              <mat-card-content>
-                <p class="template-description">{{ template.description }}</p>
-                <div class="template-meta">
-                  <mat-chip-set>
-                    <mat-chip>
-                      <mat-icon matChipAvatar>schedule</mat-icon>
-                      {{ template.estimatedTime }}
-                    </mat-chip>
-                  </mat-chip-set>
-                </div>
-              </mat-card-content>
-              
-              <mat-card-actions>
-                <button mat-raised-button color="primary" (click)="generateReport(template.id)">
-                  <mat-icon>play_arrow</mat-icon>
-                  Generate
-                </button>
-                <button mat-stroked-button>
-                  <mat-icon>preview</mat-icon>
-                  Preview
-                </button>
-              </mat-card-actions>
-            </mat-card>
-          </div>
-        </div>
-      </mat-tab>
 
-      <!-- Scheduled Reports Tab -->
-      <mat-tab label="Scheduled Reports">
-        <div class="tab-content">
-          <h2 class="section-title">Scheduled Reports</h2>
-          <p class="section-description">Manage your automated report generation schedules</p>
-          
-          <div class="scheduled-reports-container">
-            <mat-card class="scheduled-card">
-              <mat-card-content>
-                <div class="scheduled-placeholder">
-                  <mat-icon class="scheduled-placeholder-icon">schedule</mat-icon>
-                  <h3>No Scheduled Reports</h3>
-                  <p>You haven't scheduled any reports yet. Set up automated report generation to receive regular updates.</p>
-                  <button mat-raised-button color="primary">
-                    <mat-icon>add_alarm</mat-icon>
-                    Schedule Your First Report
-                  </button>
-                </div>
-              </mat-card-content>
-            </mat-card>
-          </div>
-        </div>
-      </mat-tab>
 
       <!-- Report History Tab -->
       <mat-tab label="Report History">
