@@ -37,7 +37,10 @@
     }
 
     .header-actions {
-      .create-btn {
+      display: flex;
+      gap: 12px;
+
+      .refresh-btn {
         background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%);
         border: none;
         border-radius: 12px;
@@ -49,6 +52,26 @@
         &:hover {
           transform: translateY(-2px);
           box-shadow: 0 12px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+
+      .export-btn {
+        background: #ffffff;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 12px 24px;
+        font-weight: 600;
+        color: #64748b;
+        transition: all 0.3s ease;
+
+        &:hover {
+          border-color: #3b82f6;
+          color: #3b82f6;
+          background: rgba(59, 130, 246, 0.05);
         }
 
         mat-icon {
@@ -327,8 +350,12 @@
 
       .header-actions {
         align-self: stretch;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
 
-        .create-btn {
+        .refresh-btn,
+        .export-btn {
           width: 100%;
           justify-content: center;
         }

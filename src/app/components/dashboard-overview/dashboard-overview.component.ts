@@ -169,6 +169,32 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
     return permission?.canExport || false;
   }
 
+  refreshDashboards(): void {
+    this.loadDashboards();
+    this.applyFilters();
+  }
+
+  exportDashboards(): void {
+    const headers = ['ID','Title','Description','Company','Category','Last Updated'];
+    const rows = this.filteredDashboards.map(d => [
+      d.id,
+      d.title,
+      d.description,
+      d.company,
+      d.category,
+      d.lastUpdated instanceof Date ? d.lastUpdated.toISOString() : new Date(d.lastUpdated).toISOString()
+    ]);
+    const escape = (val: any) => `"${String(val ?? '').replace(/"/g, '""')}"`;
+    const csv = [headers.join(','), ...rows.map(r => r.map(escape).join(','))].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'dashboards.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);
