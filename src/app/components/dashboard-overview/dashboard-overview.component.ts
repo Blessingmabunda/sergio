@@ -10,7 +10,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
@@ -34,7 +33,6 @@ import { User } from '../../models/user.model';
     MatIconModule,
     MatInputModule,
     MatFormFieldModule,
-    MatSelectModule,
     MatChipsModule,
     MatGridListModule,
     MatToolbarModule,
@@ -49,12 +47,10 @@ import { User } from '../../models/user.model';
 export class DashboardOverviewComponent implements OnInit, OnDestroy {
   dashboards: Dashboard[] = [];
   filteredDashboards: Dashboard[] = [];
-  categories: string[] = [];
   currentUser: User | null = null;
   isLoading = true;
   
   searchTerm = '';
-  selectedCategory = '';
   
   private destroy$ = new Subject<void>();
   private searchSubject = new Subject<string>();
@@ -77,7 +73,6 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentUser = this.authService.getCurrentUser();
     this.loadDashboards();
-    this.loadCategories();
   }
 
   ngOnDestroy(): void {
@@ -100,33 +95,17 @@ export class DashboardOverviewComponent implements OnInit, OnDestroy {
     });
   }
 
-  loadCategories(): void {
-    this.dashboardService.getCategories().subscribe({
-      next: (categories) => {
-        this.categories = categories;
-      }
-    });
-  }
 
   onSearchChange(searchTerm: string): void {
     this.searchTerm = searchTerm;
     this.searchSubject.next(searchTerm);
   }
 
-  onCategoryChange(): void {
-    this.applyFilters();
-  }
 
-  clearFilters(): void {
-    this.searchTerm = '';
-    this.selectedCategory = '';
-    this.applyFilters();
-  }
 
   applyFilters(): void {
     const filter: DashboardFilter = {
       searchTerm: this.searchTerm || undefined,
-      category: this.selectedCategory || undefined,
       isActive: true
     };
 
