@@ -14,7 +14,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 export class AppComponent implements OnInit {
   title = 'dashboard-app';
   showSidebar = false;
-  isSidebarCollapsed = false;
+  isSidebarCollapsed = true;
 
   constructor(private router: Router) {}
 

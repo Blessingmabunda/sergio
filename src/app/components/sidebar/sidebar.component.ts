@@ -36,7 +36,7 @@ interface NavigationItem {
 })
 export class SidebarComponent implements OnInit {
   currentUser: User | null = null;
-  isCollapsed = false;
+  isCollapsed = true;
   @Output() collapsedChange = new EventEmitter<boolean>();
 
   navigationItems: NavigationItem[] = [
