@@ -247,6 +247,13 @@
 
   // Collapsed state adjustments
   &.collapsed {
+    .sidebar-header {
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+      padding: 16px 10px;
+    }
+
     .sidebar-header .logo-text,
     .user-profile .user-info,
     .nav-item .nav-label,

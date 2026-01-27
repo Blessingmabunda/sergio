@@ -93,11 +93,4 @@ export class LoginComponent implements OnInit {
     }
     return '';
   }
-
-  fillCredentials(username: string, password: string): void {
-    this.loginForm.patchValue({
-      username: username,
-      password: password
-    });
-  }
 }

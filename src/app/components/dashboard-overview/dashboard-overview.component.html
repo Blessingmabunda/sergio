@@ -6,6 +6,14 @@
       <p class="page-subtitle">Manage and view your dashboards</p>
     </div>
     <div class="header-actions">
+      <mat-form-field appearance="outline" class="time-range-field">
+        <mat-label>Time Range</mat-label>
+        <mat-select [(value)]="selectedTimeRange" (selectionChange)="onTimeRangeChange($event.value)">
+          <mat-option *ngFor="let range of timeRanges" [value]="range.value">
+            {{ range.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
       <button mat-raised-button color="primary" class="refresh-btn" (click)="refreshDashboards()">
         <mat-icon>refresh</mat-icon>
         Refresh

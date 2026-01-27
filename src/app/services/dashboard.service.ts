@@ -167,6 +167,29 @@ export class DashboardService {
       if (filter.category && dashboard.category !== filter.category) return false;
       if (filter.company && dashboard.company !== filter.company) return false;
       if (filter.isActive !== undefined && dashboard.isActive !== filter.isActive) return false;
+      
+      if (filter.timeRange && filter.timeRange !== 'all') {
+        const now = new Date();
+        const dashboardDate = new Date(dashboard.lastUpdated);
+        const diffTime = now.getTime() - dashboardDate.getTime();
+        const diffDays = diffTime / (1000 * 3600 * 24);
+
+        switch (filter.timeRange) {
+          case '24h':
+            if (diffDays > 1) return false;
+            break;
+          case '7d':
+            if (diffDays > 7) return false;
+            break;
+          case '30d':
+            if (diffDays > 30) return false;
+            break;
+          case '90d':
+            if (diffDays > 90) return false;
+            break;
+        }
+      }
+
       if (filter.searchTerm) {
         const searchLower = filter.searchTerm.toLowerCase();
         return dashboard.title.toLowerCase().includes(searchLower) ||

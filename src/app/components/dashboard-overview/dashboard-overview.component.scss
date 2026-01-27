@@ -39,6 +39,20 @@
     .header-actions {
       display: flex;
       gap: 12px;
+      align-items: center;
+
+      .time-range-field {
+        width: 200px;
+        margin-bottom: -22px; // Adjust for form field spacing
+
+        ::ng-deep .mat-mdc-form-field {
+          .mat-mdc-text-field-wrapper {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding-bottom: 0;
+          }
+        }
+      }
 
       .refresh-btn {
         background: linear-gradient(135deg, #3ca0fa 0%, #3ca0fa 100%);
@@ -339,6 +353,11 @@
         .export-btn {
           width: 100%;
           justify-content: center;
+        }
+
+        .time-range-field {
+          width: 100%;
+          margin-bottom: 0;
         }
       }
     }

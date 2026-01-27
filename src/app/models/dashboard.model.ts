@@ -54,4 +54,5 @@ export interface DashboardFilter {
   company?: string;
   searchTerm?: string;
   isActive?: boolean;
+  timeRange?: string;
 }
